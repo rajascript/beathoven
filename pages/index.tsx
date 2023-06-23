@@ -93,7 +93,7 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
           />
           <TimerApp />
           <div
-          style={{marginBottom:"120px"}}
+          style={{marginBottom:"80px"}}
           />
           <Counter />
         </div>    </>
