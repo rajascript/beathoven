@@ -1,9 +1,8 @@
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
-import styled from 'styled-components';
-import Counter from 'components/CounterApp';
-import TimerApp from 'components/TimerApp';
+import Counter from 'components/counterApp';
+import TimerApp from 'components/timerApp';
 
 
 const bgs = [
