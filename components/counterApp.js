@@ -49,6 +49,7 @@ const Counter = () => {
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
+            cursor: 'pointer',
             backgroundColor: '#000000',
             outline: 'none',
             border: 'none',
@@ -67,6 +68,7 @@ const Counter = () => {
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
+            cursor: 'pointer',
             backgroundColor: '#000000',
             outline: 'none',
             border: 'none',
@@ -83,6 +85,7 @@ const Counter = () => {
           style={{
             margin: '10px',
             fontSize: '16px',
+            cursor: 'pointer',
             fontWeight: 'bold',
             color: '#fff',
             backgroundColor: '#000000',

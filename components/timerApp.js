@@ -114,6 +114,7 @@ const Timer = () => {
         <button
           style={{
             margin: '10px',
+            cursor: 'pointer',
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
@@ -132,6 +133,7 @@ const Timer = () => {
         <button
           style={{
             margin: '10px',
+            cursor: 'pointer',
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
@@ -150,6 +152,7 @@ const Timer = () => {
         <button
           style={{
             margin: '10px',
+            cursor: 'pointer',
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
