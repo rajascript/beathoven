@@ -50,7 +50,7 @@ const Timer = () => {
 
   const resetTimer = () => {
     setIsRunning(false);
-    setMinutes(0);
+    setMinutes(30);
     setSeconds(0);
   };
 
