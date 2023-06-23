@@ -89,6 +89,9 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
            >
             Artur Schnabel
           </div>
+          <div
+          style={{marginBottom:"50px"}}
+          />
           <TimerApp />
           <div
           style={{marginBottom:"120px"}}

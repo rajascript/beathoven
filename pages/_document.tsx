@@ -35,7 +35,7 @@ export default class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
         </Head>
         <body
-        style={{margin: "0"}}
+        style={{margin: "0", height: "100vh",}}
         className="next-dark-theme">
           <Main />
           <NextScript />
