@@ -74,7 +74,6 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
           backgroundPosition: "center",
           display:"flex",
           flexDirection: "column",
-          padding: "50px 0",
           transition: "background-image 0.7s ease-in-out",
         }}>
            <div 
