@@ -52,10 +52,10 @@ function getCurrentTime() {
   }
 
   // Ensure two-digit formatting for hours and minutes
-  hours = hours.toString().padStart(2, '0');
-  minutes = minutes.toString().padStart(2, '0');
+  const hoursInt = hours.toString().padStart(2, '0');
+  const minutesInt = minutes.toString().padStart(2, '0');
 
-  const currentTime = `${hours}:${minutes}`;
+  const currentTime = `${hoursInt}:${minutesInt}`;
   return currentTime;
 }
 
