@@ -5,6 +5,11 @@ const Counter = () => {
 
   const increment = () => {
     setCount(count + 1);
+    if (document) {
+      const audio = new Audio();
+      audio.src = '/click.mp3';
+      audio.play();
+    }
   };
 
   const decrement = () => {

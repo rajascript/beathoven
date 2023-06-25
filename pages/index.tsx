@@ -40,6 +40,25 @@ src:"Wilhelm Kempff.png"},
 src:"Wolfgang-Amadeus-Mozart-Maria-Anna-oil-parents.jpg"}
 ]
 
+function getCurrentTime() {
+  const date = new Date();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+
+  // Convert to 12-hour format
+  if (hours > 12) {
+    hours -= 12;
+    
+  }
+
+  // Ensure two-digit formatting for hours and minutes
+  hours = hours.toString().padStart(2, '0');
+  minutes = minutes.toString().padStart(2, '0');
+
+  const currentTime = `${hours}:${minutes}`;
+  return currentTime;
+}
+
 export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticProps>) {
   
    useEffect(() => {
@@ -87,6 +106,19 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
         }}
            >
             Artur Schnabel
+          </div>
+           <div 
+           id="title"
+           style={{
+            opacity: "80%",
+            fontSize: "20px",
+            position: "fixed",
+            color: "white",
+            bottom:"10px",
+            left:"10px",
+        }}
+           >
+            {getCurrentTime()}
           </div>
           <div
           style={{marginBottom:"50px"}}

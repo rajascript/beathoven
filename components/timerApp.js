@@ -32,6 +32,11 @@ const Timer = () => {
             // Timer has reached 0
             setIsRunning(false);
             clearInterval(interval);
+            if (document) {
+              const audio = new Audio();
+              audio.src = '/sound.mp3';
+              audio.play();
+            }
           }
         }
       }, 1000);
