@@ -1,6 +1,7 @@
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { useEffect } from 'react';
+import Clock from 'components/Clock';
 import Counter from 'components/counterApp';
 import TimerApp from 'components/timerApp';
 
@@ -40,24 +41,6 @@ src:"Wilhelm Kempff.png"},
 src:"Wolfgang-Amadeus-Mozart-Maria-Anna-oil-parents.jpg"}
 ]
 
-function getCurrentTime() {
-  const date = new Date();
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-
-  // Convert to 12-hour format
-  if (hours > 12) {
-    hours -= 12;
-    
-  }
-
-  // Ensure two-digit formatting for hours and minutes
-  const hoursInt = hours.toString().padStart(2, '0');
-  const minutesInt = minutes.toString().padStart(2, '0');
-
-  const currentTime = `${hoursInt}:${minutesInt}`;
-  return currentTime;
-}
 
 export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticProps>) {
   
@@ -107,19 +90,7 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
            >
             Artur Schnabel
           </div>
-           <div 
-           id="title"
-           style={{
-            opacity: "80%",
-            fontSize: "20px",
-            position: "fixed",
-            color: "white",
-            bottom:"10px",
-            left:"10px",
-        }}
-           >
-            {getCurrentTime()}
-          </div>
+           <Clock />
           <div
           style={{marginBottom:"50px"}}
           />
