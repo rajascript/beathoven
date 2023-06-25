@@ -57,6 +57,9 @@ const Timer = () => {
     setIsRunning(false);
     setMinutes(30);
     setSeconds(0);
+    setTimeout(() => {
+      setIsRunning(true);
+    }, 1000);
   };
 
   const handleMinutesChange = (event) => {
