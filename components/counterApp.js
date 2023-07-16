@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-const Counter = () => {
+const Counter = ({ isSoundOn }) => {
   const [count, setCount] = useState(0);
 
   const increment = () => {
     setCount(count + 1);
-    if (document) {
+    if (document && isSoundOn) {
       const audio = new Audio();
       audio.src = '/click.mp3';
       audio.play();

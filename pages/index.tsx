@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Clock from 'components/Clock';
 import Counter from 'components/counterApp';
 import TimerApp from 'components/timerApp';
@@ -20,7 +20,7 @@ src:"beethoven-moonlight-sonata.jpeg"},
 { title:"Emil Gilels" ,
 src:"Emil Gilels.jpeg"},
 { title:"Franz Liszt" ,
-src:"Franz_Liszt_1858.jpeg"},
+src:"Franz_Liszt.jpeg"},
 { title:"Glenn Gould" ,
 src:"Glenn Gould .png"},
 { title:"Jean Sebastien Bach" ,
@@ -33,7 +33,7 @@ src:"Sergei Rachmaninov.png"},
 src:"Sergei_Rachmaninoff_cph.3a40575.jpg"},
 { title:"Sviatoslav Richter" ,
 src:"Sviatoslav Richter.png"},
-{ title:"vladimir Horowitz" ,
+{ title:"Vladimir Horowitz" ,
 src:"vladimir-horowitz.jpeg"},
 { title:"Wilhelm Kempff" ,
 src:"Wilhelm Kempff.png"},
@@ -43,7 +43,13 @@ src:"Wolfgang-Amadeus-Mozart-Maria-Anna-oil-parents.jpg"}
 
 
 export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticProps>) {
-  
+
+  const [isSoundOn, setSound] = useState(false);
+
+  const toggleSound = ()=> {
+    setSound(!isSoundOn);
+  }
+
    useEffect(() => {
         setInterval(()=>{
     if(document){
@@ -54,6 +60,7 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
     bgElem.style.backgroundImage = `linear-gradient(45deg, rgba(0,0,0, 0.85), rgba(0,0,0, 0.90)),url('${bgs[elem].src}')`;
     bgElem.style.backgroundSize = "cover";
     bgElem.style.backgroundRepeat = "no-repeat";
+    bgElem.style.backgroundPosition = "initial";
     }
     if(titleElem)
     titleElem.innerText = bgs[elem].title;
@@ -71,9 +78,10 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
         style={{
           width: "100vw",
           height: "100vh",
-          background: "linear-gradient(45deg, rgba(0,0,0, 0.85), rgba(0,0,0, 0.90)), url('Artur Schnabel.png')",
+          background: "linear-gradient(45deg, rgba(0,0,0, 0.85), rgba(0,0,0, 0.90)), url('Josef_Hofman_03.jpeg')",
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "initial",
+          backgroundRepeat: "no-repeat",
           display:"flex",
           flexDirection: "column",
           transition: "background-image 0.7s ease-in-out",
@@ -88,7 +96,20 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
             right:"10px",
         }}
            >
-            Artur Schnabel
+            Josef Hofman
+          </div>
+           <div 
+           id="title"
+           style={{
+            opacity: "20%",
+            position: "fixed",
+            color: "white",
+            top:"10px",
+            right:"10px",
+        }}
+          onClick={toggleSound}
+           >
+            Sound{isSoundOn?": On":": Off"}
           </div>
            <Clock />
           <div
@@ -98,7 +119,7 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
           <div
           style={{marginBottom:"80px"}}
           />
-          <Counter />
+          <Counter isSoundOn={isSoundOn} />
         </div>    </>
   );
 }
