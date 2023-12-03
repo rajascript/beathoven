@@ -51,7 +51,7 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
     setSound(!isSoundOn);
   }
   const togglePIP = async ()=> {
-	let pipWindow = null;
+	let pipWindow: { document: { head: { appendChild: (arg0: HTMLStyleElement) => void; }; body: { append: (arg0: Element | null) => void; }; }; } | null = null;
 
     if(!isPipOn){
         const timer = document.querySelector("#pipContainer");
