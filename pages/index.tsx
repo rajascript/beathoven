@@ -45,10 +45,51 @@ src:"Wolfgang-Amadeus-Mozart-Maria-Anna-oil-parents.jpg"}
 export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   const [isSoundOn, setSound] = useState(false);
+  const [isPipOn, setPIP] = useState(false);
 
   const toggleSound = ()=> {
     setSound(!isSoundOn);
   }
+  const togglePIP = async ()=> {
+	let pipWindow = null;
+
+    if(!isPipOn){
+        const timer = document.querySelector("#pipContainer");
+
+		const pipOptions = {
+			initialAspectRatio: timer.clientWidth / timer.clientHeight,
+			lockAspectRatio: true,
+			copyStyleSheets: true,
+		};
+
+		pipWindow = await documentPictureInPicture.requestWindow(pipOptions);
+
+		// Copy style sheets over from the initial document
+		// so that the player looks the same.
+		[...document.styleSheets].forEach((styleSheet) => {
+			try {
+				const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
+				const style = document.createElement('style');
+
+				style.textContent = cssRules;
+				pipWindow.document.head.appendChild(style);
+			} catch (e) {
+				const link = document.createElement('link');
+
+				link.rel = 'stylesheet';
+				link.type = styleSheet.type;
+				link.media = styleSheet.media;
+				link.href = styleSheet.href;
+				pipWindow.document.head.appendChild(link);
+			}
+		});
+
+		// Add timer to the PiP window.
+		pipWindow.document.body.append(timer);
+
+  }
+  }
+
 
    useEffect(() => {
         setInterval(()=>{
@@ -110,12 +151,28 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
           onClick={toggleSound}
            >
             Sound{isSoundOn?": On":": Off"}
+            
           </div>
+           <div 
+           id="pip"
+           style={{
+            opacity: "20%",
+            position: "fixed",
+            color: "white",
+            top:"10px",
+            right:"200px",
+        }}
+          onClick={togglePIP}
+           >
+            PIP{isPipOn?": On":": Off"}
+          </div>
+          <div id="pipContainer">
            <Clock />
           <div
           style={{marginBottom:"50px"}}
           />
           <TimerApp />
+          </div>
           <div
           style={{marginBottom:"80px"}}
           />
