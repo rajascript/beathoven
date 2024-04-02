@@ -25,6 +25,17 @@
     background-size: 110% auto;
 }
 
+.header-space {
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 500px) {
+    .header-space {
+        margin-bottom: 0;
+    }
+}
+
+
 @-webkit-keyframes fade {
     0% {
         opacity: 0;

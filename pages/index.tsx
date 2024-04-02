@@ -6,6 +6,9 @@ import Counter from 'components/counterApp';
 import TimerApp from 'components/timerApp';
 
 
+
+
+
 const bgs = [
   { title:"Artur Schnabel"  ,
   src:"Artur Schnabel.png" },
@@ -45,50 +48,11 @@ src:"Wolfgang-Amadeus-Mozart-Maria-Anna-oil-parents.jpg"}
 export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticProps>) {
 
   const [isSoundOn, setSound] = useState(false);
-  const [isPipOn, setPIP] = useState(false);
 
   const toggleSound = ()=> {
     setSound(!isSoundOn);
   }
-  const togglePIP = async ()=> {
-	let pipWindow: { document: { head: { appendChild: (arg0: HTMLStyleElement) => void; }; body: { append: (arg0: Element | null) => void; }; }; } | null = null;
-
-    if(!isPipOn){
-        const timer = document.querySelector("#pipContainer");
-
-		const pipOptions = {
-			initialAspectRatio: timer.clientWidth / timer.clientHeight,
-			lockAspectRatio: true,
-			copyStyleSheets: true,
-		};
-
-		pipWindow = await documentPictureInPicture.requestWindow(pipOptions);
-
-		// Copy style sheets over from the initial document
-		// so that the player looks the same.
-		[...document.styleSheets].forEach((styleSheet) => {
-			try {
-				const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
-				const style = document.createElement('style');
-
-				style.textContent = cssRules;
-				pipWindow.document.head.appendChild(style);
-			} catch (e) {
-				const link = document.createElement('link');
-
-				link.rel = 'stylesheet';
-				link.type = styleSheet.type;
-				link.media = styleSheet.media;
-				link.href = styleSheet.href;
-				pipWindow.document.head.appendChild(link);
-			}
-		});
-
-		// Add timer to the PiP window.
-		pipWindow.document.body.append(timer);
-
-  }
-  }
+  
 
 
    useEffect(() => {
@@ -111,11 +75,11 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
   return (<>
   <Head>
     <title>Beathoven</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" type="image/png" href="/favicon.ico" />
   </Head>
         <div 
           id="bg"
-          className='slide_photo'
         style={{
           width: "100vw",
           height: "100vh",
@@ -153,29 +117,11 @@ export default function Homepage({  }: InferGetStaticPropsType<typeof getStaticP
             Sound{isSoundOn?": On":": Off"}
             
           </div>
-           <div 
-           id="pip"
-           style={{
-            opacity: "20%",
-            position: "fixed",
-            color: "white",
-            top:"10px",
-            right:"200px",
-        }}
-          onClick={togglePIP}
-           >
-            PIP{isPipOn?": On":": Off"}
-          </div>
+           
           <div id="pipContainer">
            <Clock />
-          <div
-          style={{marginBottom:"50px"}}
-          />
           <TimerApp />
           </div>
-          <div
-          style={{marginBottom:"80px"}}
-          />
           <Counter isSoundOn={isSoundOn} />
         </div>    </>
   );

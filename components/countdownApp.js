@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const ContainerDiv = styled.div`
-  padding-top: 50px;
+  padding-top: 15%;
 
   @media screen and (max-width: 700px) {
     padding-top: 0;
   }
 `;
 
-const Timer = () => {
+const Countdown = () => {
+  const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(30);
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -42,30 +43,47 @@ const Timer = () => {
             localStorage.setItem('lastSavedSeconds', 59);
             setSeconds(59);
           } else {
-            // Timer has reached 0
-            setIsRunning(false);
-            clearInterval(interval);
-            if (document) {
-              const audio = new Audio();
-              audio.src = '/sound.mp3';
-              audio.play();
+            if (hours > 0) {
+              setHours((prevHours) => {
+                let hr = +prevHours - 1;
+                if (hr < 10) {
+                  return '0' + hr;
+                }
+                localStorage.setItem('lastSavedHours', hr);
+                return hr;
+              });
+              localStorage.setItem('lastSavedMinutes', 59);
+              setMinutes(59);
+              localStorage.setItem('lastSavedSeconds', 59);
+              setSeconds(59);
+            } else {
+              // Countdown has reached 0
+              setIsRunning(false);
+              clearInterval(interval);
+              if (document) {
+                const audio = new Audio();
+                audio.src = '/sound.mp3';
+                audio.play();
+              }
             }
           }
         }
       }, 1000);
     } else if (!hasLoadedFromMem) {
+      const lastSavedHours = localStorage.getItem('lastSavedHours');
       const lastSavedMinutes = localStorage.getItem('lastSavedMinutes');
       const lastSavedSeconds = localStorage.getItem('lastSavedSeconds');
 
-      if (lastSavedMinutes || lastSavedSeconds) {
-        setMinutes(lastSavedMinutes);
-        setSeconds(lastSavedSeconds);
+      if (lastSavedHours || lastSavedMinutes || lastSavedSeconds) {
+        setHours(lastSavedHours || 0);
+        setMinutes(lastSavedMinutes || 0);
+        setSeconds(lastSavedSeconds || 0);
         setIsRunning(true);
       }
       setHasLoadedFromMem(true);
     }
     return () => clearInterval(interval);
-  }, [isRunning, minutes, seconds, hasLoadedFromMem]);
+  }, [isRunning, hours, minutes, seconds, hasLoadedFromMem]);
 
   const startTimer = () => {
     setIsRunning(true);
@@ -77,11 +95,21 @@ const Timer = () => {
 
   const resetTimer = () => {
     setIsRunning(false);
+    setHours(0);
     setMinutes(30);
     setSeconds(0);
     setTimeout(() => {
       setIsRunning(true);
     }, 1000);
+  };
+
+  const handleHoursChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    const hour = value >= 0 ? (value < 10 ? `0${value}` : `${value}`) : '00';
+
+    console.log(hour);
+    localStorage.setItem('lastSavedHours', hour);
+    setHours(hour);
   };
 
   const handleMinutesChange = (event) => {
@@ -95,18 +123,52 @@ const Timer = () => {
   };
 
   return (
-    <ContainerDiv style={{ color: 'white' }}>
+    <ContainerDiv>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <label style={{ color: 'white' }}>
           <input
             style={{
-              padding: '10px',
-              margin: '30px 15px 30px 0',
+              padding: '10px 0',
+              margin: '30px 0 30px 0',
               color: 'white',
               fontWeight: 'bold',
               backgroundColor: 'transparent',
-              width: '220px',
-              fontSize: '100px',
+              width: '150px',
+              fontSize: '130px',
+              border: 'none',
+              outline: 'none',
+              textAlign: 'right',
+            }}
+            value={hours}
+            onChange={handleHoursChange}
+          />
+        </label>
+        <label
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            backgroundColor: 'transparent',
+            width: '50px',
+            fontSize: '130px',
+            border: 'none',
+            outline: 'none',
+            marginBottom: '25px',
+            textAlign: 'center',
+            margin: '0 10px 25px 10px',
+          }}
+        >
+          :
+        </label>
+        <label style={{ color: 'white' }}>
+          <input
+            style={{
+              padding: '10px 0',
+              margin: '30px 0 30px 0',
+              color: 'white',
+              fontWeight: 'bold',
+              backgroundColor: 'transparent',
+              width: '150px',
+              fontSize: '130px',
               border: 'none',
               outline: 'none',
               textAlign: 'center',
@@ -115,16 +177,32 @@ const Timer = () => {
             onChange={handleMinutesChange}
           />
         </label>
+        <label
+          style={{
+            color: 'white',
+            fontWeight: 'bold',
+            backgroundColor: 'transparent',
+            width: '50px',
+            fontSize: '130px',
+            border: 'none',
+            outline: 'none',
+            textAlign: 'center',
+            // marginBottom: '25px',
+            margin: '0 10px 25px 10px',
+          }}
+        >
+          :
+        </label>
         <label style={{ color: 'white' }}>
           <input
             style={{
-              padding: '10px',
-              margin: '30px 0 30px 15px',
+              padding: '10px 0',
+              margin: '30px 0 30px 0',
               color: 'white',
               fontWeight: 'bold',
               backgroundColor: 'transparent',
-              width: '220px',
-              fontSize: '100px',
+              width: '150px',
+              fontSize: '130px',
               border: 'none',
               outline: 'none',
               textAlign: 'center',
@@ -148,7 +226,7 @@ const Timer = () => {
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
-            backgroundColor: '#000000',
+            backgroundColor: '#333333',
             outline: 'none',
             border: 'none',
             borderRadius: '8px',
@@ -167,7 +245,7 @@ const Timer = () => {
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
-            backgroundColor: '#000000',
+            backgroundColor: '#333333',
             outline: 'none',
             border: 'none',
             borderRadius: '8px',
@@ -186,7 +264,7 @@ const Timer = () => {
             fontSize: '16px',
             fontWeight: 'bold',
             color: '#fff',
-            backgroundColor: '#000000',
+            backgroundColor: '#333333',
             outline: 'none',
             border: 'none',
             borderRadius: '8px',
@@ -203,4 +281,4 @@ const Timer = () => {
   );
 };
 
-export default Timer;
+export default Countdown;
